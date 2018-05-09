@@ -29,8 +29,12 @@ function [R, T] = FS3R( b_base, r_base, weights )
         -Hx2 + Hy1, Hx3 + Hz1, Hy3 + Hz2, Hz3 - Hy2 - Hx1];
     
     c = det(W);
-    b = - 8 * det(MM');
-    a = - 2 * trace(MM * MM');
+    b = 8 * Hx3 * Hy2 * Hz1 - 8 * Hx2 * Hy3 * Hz1 - ...
+       8 * Hx3 * Hy1 * Hz2 + 8 * Hx1 * Hy3 * Hz2 + ...
+       8 * Hx2 * Hy1 * Hz3 - 8 * Hx1 * Hy2 * Hz3;
+    a = -2 * Hx1 * Hx1 - 2 * Hx2 * Hx2 - 2 * Hx3 * Hx3 - ...
+        2 * Hy1 * Hy1 - 2 * Hy2 * Hy2 - 2 * Hy3 * Hy3 - ...
+        2 * Hz1 * Hz1 - 2 * Hz2 * Hz2 - 2 * Hz3 * Hz3;
 
     T0 = 2 * a^3 + 27 * b^2 - 72 * a * c;
     theta = atan2(sqrt(4 * (a * a + 12 * c)^3 - T0 * T0), T0);
